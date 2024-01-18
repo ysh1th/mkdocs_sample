@@ -1,33 +1,52 @@
 site_name: MkLorum
 site_url: https://example.com/
+nav:
+  - Home: index.md
+  - About: about.md
+  
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
-nav:
-  - Home: index.md
-  - About: about.md
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: |
+          pip install mkdocs
+          # Additional dependencies if needed
+
+      - name: Build MkDocs
+        run: mkdocs build
 theme:
   palette:
 
     # Palette toggle for automatic mode
-    - media: "(prefers-color-scheme)"
+    #- media: "(prefers-color-scheme)"
       toggle:
         icon: material/brightness-auto
         name: Switch to light mode
 
     # Palette toggle for light mode
-    - media: "(prefers-color-scheme: light)"
-      scheme: default 
+    #- media: "(prefers-color-scheme: light)"
+      scheme: default
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
 
     # Palette toggle for dark mode
-    - media: "(prefers-color-scheme: dark)"
+    #- media: "(prefers-color-scheme: dark)"
       scheme: slate
       toggle:
         icon: material/brightness-4
